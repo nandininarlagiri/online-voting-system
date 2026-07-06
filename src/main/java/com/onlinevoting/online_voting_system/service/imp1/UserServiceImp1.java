@@ -5,12 +5,16 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.onlinevoting.online_voting_system.entity.User;
 import com.onlinevoting.online_voting_system.exception.EmailAlreadyExistsException;
+import com.onlinevoting.online_voting_system.exception.InvalidCredentialsException;
 import com.onlinevoting.online_voting_system.exception.UserNotFoundException;
 
 import java.util.List;
 
 import com.onlinevoting.online_voting_system.repository.UserRepository;
 import com.onlinevoting.online_voting_system.service.UserService;
+
+import com.onlinevoting.online_voting_system.dto.LoginRequest;
+import com.onlinevoting.online_voting_system.dto.LoginResponse;
 
 
 @Service
@@ -69,5 +73,25 @@ public class UserServiceImp1 implements UserService{
 
         userRepository.delete(user);
     }
+
+    @Override
+    public LoginResponse login(LoginRequest loginRequest) {
+
+        User user = userRepository.findByEmail(loginRequest.getEmail());
+
+        if (user == null) {
+            throw new InvalidCredentialsException("Invalid email or password");
+        }
+
+        if (!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
+            throw new InvalidCredentialsException("Invalid email or password");
+        }
+
+        return new LoginResponse(
+            "Login Successful",
+            user.getEmail(),
+            user.getRole()
+    );
+}
 
 }

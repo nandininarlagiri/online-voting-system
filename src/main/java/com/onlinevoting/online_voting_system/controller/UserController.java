@@ -10,6 +10,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.onlinevoting.online_voting_system.dto.LoginRequest;
+import com.onlinevoting.online_voting_system.dto.LoginResponse;
+
+// import jakarta.validation.Valid;
+
 import com.onlinevoting.online_voting_system.service.UserService;
 
 import jakarta.validation.Valid;
@@ -29,6 +34,11 @@ public class UserController {
     public User registerUser(@Valid @RequestBody User user){
         return userService.registerUser(user);
 
+    }
+
+    @PostMapping("/login")
+    public LoginResponse login(@Valid @RequestBody LoginRequest loginRequest) {
+        return userService.login(loginRequest);
     }
 
     @GetMapping
