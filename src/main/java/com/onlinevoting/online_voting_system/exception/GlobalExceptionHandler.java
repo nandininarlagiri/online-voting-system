@@ -53,4 +53,44 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(error, HttpStatus.UNAUTHORIZED);
     }
 
+    @ExceptionHandler(CandidateNotFoundException.class)
+    public ResponseEntity<Map<String, String>> handleCandidateNotFoundException(
+        CandidateNotFoundException ex) {
+
+        Map<String, String> error = new HashMap<>();
+        error.put("message", ex.getMessage());
+
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(VoteAlreadyCastException.class)
+    public ResponseEntity<Map<String, String>> handleVoteAlreadyCastException(
+        VoteAlreadyCastException ex) {
+
+        Map<String, String> error = new HashMap<>();
+        error.put("message", ex.getMessage());
+
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(ElectionNotActiveException.class)
+    public ResponseEntity<Map<String, String>> handleElectionNotActiveException(
+            ElectionNotActiveException ex) {
+
+        Map<String, String> error = new HashMap<>();
+        error.put("message", ex.getMessage());
+
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(CandidateElectionMismatchException.class)
+    public ResponseEntity<Map<String, String>> handleCandidateElectionMismatchException(
+        CandidateElectionMismatchException ex) {
+
+        Map<String, String> error = new HashMap<>();
+        error.put("message", ex.getMessage());
+
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
 }

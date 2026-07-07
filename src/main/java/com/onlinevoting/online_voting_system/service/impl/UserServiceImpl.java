@@ -1,4 +1,4 @@
-package com.onlinevoting.online_voting_system.service.imp1;
+package com.onlinevoting.online_voting_system.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -11,6 +11,7 @@ import com.onlinevoting.online_voting_system.exception.UserNotFoundException;
 import java.util.List;
 
 import com.onlinevoting.online_voting_system.repository.UserRepository;
+import com.onlinevoting.online_voting_system.security.JwtUtil;
 import com.onlinevoting.online_voting_system.service.UserService;
 
 import com.onlinevoting.online_voting_system.dto.LoginRequest;
@@ -18,13 +19,16 @@ import com.onlinevoting.online_voting_system.dto.LoginResponse;
 
 
 @Service
-public class UserServiceImp1 implements UserService{
+public class UserServiceImpl implements UserService{
 
     @Autowired
     private UserRepository userRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private JwtUtil jwtUtil;
 
     @Override
     public User registerUser(User user){
@@ -87,11 +91,12 @@ public class UserServiceImp1 implements UserService{
             throw new InvalidCredentialsException("Invalid email or password");
         }
 
+        String token = jwtUtil.generateToken(user.getEmail());
+
         return new LoginResponse(
             "Login Successful",
-            user.getEmail(),
-            user.getRole()
-    );
-}
+            token
+        );
+    }
 
 }

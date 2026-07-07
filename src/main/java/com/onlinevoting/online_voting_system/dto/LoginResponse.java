@@ -2,17 +2,15 @@ package com.onlinevoting.online_voting_system.dto;
 
 public class LoginResponse {
 
-    private String message;
-    private String email;
-    private String role;
+     private String message;
+    private String token;
 
     public LoginResponse() {
     }
 
-    public LoginResponse(String message, String email, String role) {
+    public LoginResponse(String message, String token) {
         this.message = message;
-        this.email = email;
-        this.role = role;
+        this.token = token;
     }
 
     public String getMessage() {
@@ -23,20 +21,12 @@ public class LoginResponse {
         this.message = message;
     }
 
-    public String getEmail() {
-        return email;
+    public String getToken() {
+        return token;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
+    public void setToken(String token) {
+        this.token = token;
     }
 
 }
